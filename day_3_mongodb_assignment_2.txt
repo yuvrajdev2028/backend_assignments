@@ -1,0 +1,118 @@
+db.products.aggregate([
+  { $match: { price: { $gte: 1000 } } }
+]);
+
+
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$category",
+      totalProducts: { $sum: 1 }
+    }
+  }
+]);
+
+
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$category",
+      maxPrice: { $max: "$price" },
+      minPrice: { $min: "$price" }
+    }
+  }
+]);
+
+
+db.products.aggregate([
+  {
+    $project: {
+      _id: 0,
+      name: 1,
+      price: 1
+    }
+  },
+  { $sort: { price: -1 } },
+  { $limit: 3 }
+]);
+
+
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$supplier.country",
+      avgPrice: { $avg: "$price" }
+    }
+  }
+]);
+
+
+db.products.aggregate([
+  { $match: { stock: { $lte: 10 } } },
+  { $count: "lowStockCount" }
+]);
+
+
+db.products.aggregate([
+  {
+    $project: {
+      category: 1,
+      stockValue: { $multiply: ["$price", "$stock"] }
+    }
+  },
+  {
+    $group: {
+      _id: "$category",
+      totalStockValue: { $sum: "$stockValue" }
+    }
+  }
+]);
+
+
+db.products.aggregate([
+  { $sort: { createdAt: -1 } },
+  { $limit: 5 }
+]);
+
+
+
+db.products.aggregate([
+  {
+    $group: {
+      _id: "$category",
+      count: { $sum: 1 }
+    }
+  },
+  {
+    $match: {
+      count: { $gt: 5 }
+    }
+  }
+]);
+
+
+db.products.aggregate([
+  {
+    $project: {
+      category: 1,
+      revenue: { $multiply: ["$price", "$stock"] }
+    }
+  },
+  {
+    $group: {
+      _id: "$category",
+      totalRevenue: { $sum: "$revenue" }
+    }
+  },
+  {
+    $sort: { totalRevenue: -1 }
+  },
+  {
+    $limit: 2
+  }
+]);
+
+
+
+
+

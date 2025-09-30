@@ -1,0 +1,58 @@
+db.food_items.insertMany([
+  { name: "Orange Juice", calories: 90, brand: "Haldiram", category: "juices", price: 50 },
+  { name: "Samosa", calories: 200, brand: "BTW", category: "snack", price: 20 },
+  { name: "Thali", calories: 800, brand: "Haldiram", category: "meals", price: 120 }
+]);
+
+
+db.food_items.insertOne({ name: "Apple Juice", calories: 95, brand: "Real", category: "juices", price: 55 });
+db.food_items.insertOne({ name: "Burger", calories: 350, brand: "McDonald's", category: "snack", price: 150 });
+
+db.restaurants.insertMany([
+  {
+    name: "Haldiram's CP", year: 2005, location: "Connaught Place", contact: "9999999999",
+    email: "cp@haldiram.com", nos_of_days_open: 365, city: "Delhi",
+    category: "meals", serving: "Dining"
+  },
+  {
+    name: "BTW Noida", year: 2010, location: "Sector 18", contact: "8888888888",
+    email: "noida@btw.com", nos_of_days_open: 300, city: "Noida",
+    category: "snack", serving: "Takeaway"
+  },
+  {
+    name: "Cafe Juice", year: 2018, location: "Bandra", contact: "7777777777",
+    email: "bandra@juice.com", nos_of_days_open: 340, city: "Mumbai",
+    category: "juices", serving: "Buffet"
+  }
+]);
+
+
+db.restaurants.insertOne({
+  name: "Real Juice", year: 2020, location: "Saket", contact: "6666666666",
+  email: "saket@real.com", nos_of_days_open: 365, city: "Delhi",
+  category: "juices", serving: "Takeaway"
+});
+
+db.restaurants.insertOne({
+  name: "McDonald's", year: 2000, location: "Gurgaon", contact: "5555555555",
+  email: "gurgaon@mc.com", nos_of_days_open: 365, city: "Gurgaon",
+  category: "snack", serving: "Dining"
+});
+
+db.food_items.find({ category: "juices" });
+
+db.food_items.updateMany(
+  { category: "snack" },
+  { $set: { price: 99 } } // Or any updated value
+);
+
+db.restaurants.updateMany(
+  { city: "Delhi" },
+  { $set: { location: "Mandi House" } } // Change to your updated value
+);
+
+
+db.food_items.deleteMany({ brand: "Haldiram" });
+
+db.food_items.deleteMany({ category: "juices" });
+
